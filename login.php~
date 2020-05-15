@@ -1,0 +1,62 @@
+<?php
+	session_start();
+require ("connect.php");
+?>
+<?php
+		$username = $_POST['user'];			
+		$pass = $_POST['pass'];
+	
+if (empty($username ) || empty($pass) )
+
+{
+  echo "<script>alert('Empty fields not allowed')</script>";
+  echo "<script>location.href='index.php'</script>";
+  die();
+}
+
+	
+		$result = mysql_query("SELECT * FROM user WHERE username='$username' AND password='$pass'") ;
+				
+			
+		if(mysql_num_rows($result) > 0) {
+		session_regenerate_id();
+			$member = mysql_fetch_assoc($result);
+			$_SESSION['ID'] = $member['id'];
+			$_SESSION['NAME'] = $member['username'];
+			session_write_close();
+
+
+echo "<script>alert('Welcome to HBCCK Network')</script>";
+
+if ($username == "admin" || $username == "operator")
+{
+
+echo "<script>setTimeout(\"location.href = 'main.php';\",100);</script>";
+
+}
+else
+	
+
+
+
+
+
+{
+echo "<script>setTimeout(\"location.href = 'fra_main.php';\",100);</script>";
+
+}
+			
+				}
+				else
+				{
+			  echo "<script>alert('Incorrect Login Details. Please Check or Enter Correctly')</script>";
+
+
+echo "<script>setTimeout(\"location.href = 'index.php';\",100);</script>";
+
+
+
+
+		
+			}
+?>
